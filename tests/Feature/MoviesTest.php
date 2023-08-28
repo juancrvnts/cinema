@@ -19,51 +19,23 @@ class MoviesTest extends TestCase
         $movie = Movie::factory()->create();
 
         $this->get('/')
-             ->assertOk()
-             ->assertViewIs('movies.index')
-             ->assertSee($movie->title);
+            ->assertOk()
+            ->assertViewIs('movies.index')
+            ->assertSee($movie->title);
     }
 
     /** @test */
-    public function can_see_specified_benefit()
+    public function can_see_specified_movie()
     {
-        $benefit = factory(Benefit::class)->create();
-        $related = factory(Benefit::class)->times(4)->create()->first();
+        $movie = Movie::factory()->create();
+        $anotherMovie = Movie::factory()->create();
 
-        $this->get('/beneficios/'.$benefit->category->slug.'/'.$benefit->slug)
-             ->assertViewIs('benefits.show')
-             ->assertViewHas('related', function ($related) {
-                 $this->assertCount(4, $related);
-
-                 return true;
-             })
-             ->assertSee($benefit->title)
-             ->assertSee($benefit->present()->excerpt)
-             ->assertSee($benefit->present()->valid_to)
-             ->assertSee($related->title)
-             ->assertSee($related->present()->excerpt);
-    }
-
-    /** @test */
-    public function only_published_benefits_are_displayed()
-    {
-        $published = factory(Benefit::class)->create();
-
-        $unpublished = factory(Benefit::class)->create([
-            'published_at' => Carbon::now()->addWeek(),
-        ]);
-
-        $this->get('/beneficios')
-             ->assertSee($published->title)
-             ->assertDontSee($unpublished->title);
-    }
-
-    /** @test */
-    public function only_not_expired_benefits_are_displayed()
-    {
-        $benefit = factory(Benefit::class)->states('expired')->create();
-
-        $this->get('/beneficios')
-             ->assertDontSee($benefit->title);
+        $this->get('/{$movie->title}')
+            ->assertOk()
+            ->assertViewIs('movies.show')
+            ->assertSee($movie->title)
+            ->assertSee($movie->director)
+            ->assertSee($movie->duration)
+            ->assertSee($movie->exhibited_until);
     }
 }
