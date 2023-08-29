@@ -10,7 +10,7 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/dashboard/home">Add Movies</a>
+              <a class="nav-link" aria-current="page" href="/dashboard/movies">Add Movies</a>
             </li>
           </div>
         </div>
