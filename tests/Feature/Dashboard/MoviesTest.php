@@ -20,4 +20,10 @@ class MoviesTest extends TestCase
             ->assertOk()
             ->assertSee('Movies list');
     }
+
+    /** @test */
+    public function it_can_store_a_movie()
+    {
+        
+    }
 }

@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\MoviesController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [MoviesController::class, 'index'], function () {
-    return view('movies.index');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/{slug}', [MoviesController::class, 'show'], function (Request $request) {
-    return view('movies.show');
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
