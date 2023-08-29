@@ -34,4 +34,20 @@ class MoviesController extends Controller
 
         return view('movies.show')->with(compact('movie'));
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $movie = new Movie($request->all());
+        $movie->save();
+
+        return redirect()
+            ->route('movies.show', $movie->id)
+            ->with('successful', 'La pelìcula se creó correctamente');
+    }
 }
