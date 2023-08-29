@@ -30,7 +30,7 @@ class MoviesTest extends TestCase
         $movie = Movie::factory()->create();
         $anotherMovie = Movie::factory()->create();
 
-        $this->get('/{$movie->title}')
+        $this->get('/'.$movie->slug)
             ->assertOk()
             ->assertViewIs('movies.show')
             ->assertSee($movie->title)
